@@ -1,5 +1,6 @@
 ﻿using BepInEx;
 using HarmonyLib;
+using StarLevelSystem.API;
 using StarLevelSystem.common;
 using StarLevelSystem.Data;
 using System;
@@ -110,7 +111,7 @@ namespace StarLevelSystem.modules
 
 
         internal static void ApplyColorizationWithoutLevelEffects(GameObject cgo, ColorDef colorization) {
-            LevelSetup genlvlup = colorization.toLevelEffect();
+            LevelSetup genlvlup = colorization.ToLevelEffect();
             // Material assignment changes must occur in a try block- they can quietly crash the game otherwise
             try {
                 foreach (var smr in cgo.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>())

@@ -1,8 +1,10 @@
 ﻿using Jotunn.Managers;
+using StarLevelSystem.API;
 using StarLevelSystem.common;
 using StarLevelSystem.modules;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using static StarLevelSystem.common.DataObjects;
 
 namespace StarLevelSystem.Data
@@ -29,6 +31,17 @@ namespace StarLevelSystem.Data
                 Logger.LogDebug($"Updated creature from cache {character.name}-{czoid}");
                 sessionCache[czoid] = cacheEntry;
             }
+        }
+
+        public static CreatureDetailCache GetCreatureDetailCache(uint czoid) {
+            // Get the cache entry if it exists
+            if (sessionCache.ContainsKey(czoid)) {
+                return sessionCache[czoid];
+            }
+            // Find the creature and build its cache entry if it exists
+            GameObject go = ZNetScene.instance.FindInstance(new ZDOID() { ID = czoid });
+            if (go == null) { return new CreatureDetailCache(); }
+            return GetAndSetDetailCache(go.GetComponent<Character>());
         }
 
         public static CreatureDetailCache GetAndSetDetailCache(Character character, bool update = false, int leveloverride = 0, bool onlycache = false, bool setupModifiers = true) {
@@ -194,6 +207,37 @@ namespace StarLevelSystem.Data
                 sessionCache[character.GetZDOID().ID] = characterCacheEntry;
             }
             return characterCacheEntry;
+        }
+
+        internal static bool ApplyCacheForSelectedCreature(Character character) {
+            if (character == null || character.IsPlayer()) { return false; }
+            CreatureDetailCache ccd = GetAndSetDetailCache(character);
+            // Modify the creatures stats by custom character/biome modifications
+            ModificationExtensionSystem.ApplySpeedModifications(character, ccd);
+            ModificationExtensionSystem.ApplyDamageModification(character, ccd, true);
+            ModificationExtensionSystem.LoadApplySizeModifications(character.gameObject, character.m_nview, ccd, true);
+            ModificationExtensionSystem.ApplyHealthModifications(character, ccd);
+
+            if (ccd.Level > 1) {
+                Colorization.ApplyColorizationWithoutLevelEffects(character.gameObject, ccd.Colorization);
+            }
+
+            return true;
+        }
+
+        public static CreatureDetailCacheSDO GetCreatureCacheEntry(uint creatureId) {
+            if (sessionCache.ContainsKey(creatureId)) {
+                return APIReciever.FromDetailCacheToIntermediate(sessionCache[creatureId]);
+            }
+            return null;
+        }
+
+        public static bool UpdateCreatureCacheEntry(uint creatureId, CreatureDetailCacheSDO updatedEntry) {
+            if (sessionCache.ContainsKey(creatureId)) {
+                sessionCache[creatureId] = APIReciever.FromIntermediateToCreatureDetailCache(updatedEntry);
+                return true;
+            }
+            return false;
         }
 
         //public static void UpdateCacheFromConfigChange() {

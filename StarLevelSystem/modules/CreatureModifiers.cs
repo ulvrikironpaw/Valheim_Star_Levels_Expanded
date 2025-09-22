@@ -1,4 +1,5 @@
-﻿using StarLevelSystem.common;
+﻿using StarLevelSystem.API;
+using StarLevelSystem.common;
 using StarLevelSystem.Data;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,10 @@ namespace StarLevelSystem.modules
                     Logger.LogWarning($"Major modifier {mod} not found in CreatureModifiersData, skipping setup for {character.name}");
                     continue;
                 }
+                if (mods.ContainsKey(mod)) {
+                    Logger.LogDebug($"Skipping duplicate boss modifier {mod} for character {character.name}");
+                    continue;
+                }
                 mods.Add(mod, ModifierType.Boss);
                 cacheEntry.Modifiers = mods;
                 var selectedMod = CreatureModifiersData.ActiveCreatureModifiers.BossModifiers[mod];
@@ -53,6 +58,10 @@ namespace StarLevelSystem.modules
                         Logger.LogWarning($"Major modifier {mod} not found in CreatureModifiersData, skipping setup for {character.name}");
                         continue;
                     }
+                    if (mods.ContainsKey(mod)) {
+                        Logger.LogDebug($"Skipping duplicate major modifier {mod} for character {character.name}");
+                        continue;
+                    }
                     mods.Add(mod, ModifierType.Major);
                     cacheEntry.Modifiers = mods;
                     var selectedMod = CreatureModifiersData.ActiveCreatureModifiers.MajorModifiers[mod];
@@ -72,6 +81,10 @@ namespace StarLevelSystem.modules
                     if (!CreatureModifiersData.ActiveCreatureModifiers.MinorModifiers.ContainsKey(mod)) {
                         if (mod == ModifierNames.None) { continue; }
                         Logger.LogWarning($"Minor modifier {mod} not found in CreatureModifiersData, skipping setup for {character.name}");
+                        continue;
+                    }
+                    if (mods.ContainsKey(mod)) {
+                        Logger.LogDebug($"Skipping duplicate minor modifier {mod} for character {character.name}");
                         continue;
                     }
                     mods.Add(mod, ModifierType.Minor);

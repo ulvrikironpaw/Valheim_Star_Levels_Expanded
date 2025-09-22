@@ -1,6 +1,7 @@
 ﻿using BepInEx;
 using Jotunn.Entities;
 using Jotunn.Managers;
+using StarLevelSystem.API;
 using StarLevelSystem.Data;
 using StarLevelSystem.modules;
 using System;

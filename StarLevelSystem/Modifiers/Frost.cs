@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using StarLevelSystem.API;
 using static StarLevelSystem.common.DataObjects;
 
 namespace StarLevelSystem.Modifiers

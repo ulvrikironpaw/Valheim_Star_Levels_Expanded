@@ -1,5 +1,6 @@
 ﻿using Jotunn.Entities;
 using Jotunn.Managers;
+using StarLevelSystem.API;
 using StarLevelSystem.Data;
 using System;
 using System.Collections.Generic;
@@ -21,43 +22,12 @@ namespace StarLevelSystem.common
         public static IDeserializer yamldeserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
         public static ISerializer yamlserializer = new SerializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitDefaults).Build();
 
-        public enum CreatureBaseAttribute {
-            BaseHealth,
-            BaseDamage,
-            AttackSpeed,
-            Speed,
-            Size,
-        }
-
         public static List<CreatureBaseAttribute> CreatureBaseAttributes = new List<CreatureBaseAttribute> {
             CreatureBaseAttribute.BaseHealth,
             CreatureBaseAttribute.BaseDamage,
             CreatureBaseAttribute.Speed,
             CreatureBaseAttribute.AttackSpeed,
         };
-
-        public enum CreaturePerLevelAttribute
-        {
-            HealthPerLevel,
-            DamagePerLevel,
-            SpeedPerLevel,
-            AttackSpeedPerLevel,
-            SizePerLevel,
-        }
-
-        public enum DamageType
-        {
-            Blunt,
-            Slash,
-            Pierce,
-            Fire,
-            Frost,
-            Lightning,
-            Poison,
-            Spirit,
-            Chop,
-            Pickaxe,
-        }
 
         public enum NameSelectionStyle
         {
@@ -79,13 +49,6 @@ namespace StarLevelSystem.common
             CreaturePerLevelAttribute.SpeedPerLevel,
             CreaturePerLevelAttribute.SizePerLevel,
         };
-
-        public enum ModifierType
-        {
-            Major = 0,
-            Minor = 1,
-            Boss = 2
-        }
 
         public class CreatureLevelSettings {
             public Dictionary<Heightmap.Biome, BiomeSpecificSetting> BiomeConfiguration { get; set; }
@@ -314,26 +277,7 @@ namespace StarLevelSystem.common
             }
         }
 
-        public class ColorDef
-        {
-            public float hue { get; set; } = 0f;
-            public float saturation { get; set; } = 0f;
-            public float value { get; set; } = 0f;
-            public bool is_emissive { get; set; } = false;
 
-            public LevelEffects.LevelSetup toLevelEffect()
-            {
-                return new LevelEffects.LevelSetup()
-                {
-                    m_scale = 1f,
-                    m_hue = hue,
-                    m_saturation = saturation,
-                    m_value = value,
-                    m_setEmissiveColor = is_emissive,
-                    m_emissiveColor = new Color(hue, saturation, value)
-                };
-            }
-        }
 
         [DataContract]
         public class ColorRangeDef
@@ -451,8 +395,12 @@ namespace StarLevelSystem.common
                 // we can't deserialize a null buffer
                 if (stored == null) { return new Dictionary<DamageType, float>(); }
                 var mStream = new MemoryStream(stored);
-                var deserializedDictionary = (Dictionary<DamageType, float>)binFormatter.Deserialize(mStream);
-                return deserializedDictionary;
+                // Try catch here to deal with upgrading from when the enum was stored elsewhere
+                try {
+                    var deserializedDictionary = (Dictionary<DamageType, float>)binFormatter.Deserialize(mStream);
+                    return deserializedDictionary;
+                } catch { }
+                return new Dictionary<DamageType, float>();
             }
 
             protected override void SetValue(Dictionary<DamageType, float> value)

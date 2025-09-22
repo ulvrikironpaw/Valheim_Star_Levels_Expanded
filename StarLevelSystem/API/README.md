@@ -1,20 +1,24 @@
-# CreatureDetailCache Reflection API Documentation
+# Star Level System API Documentation
 
 ## Overview
+This API is split into two parts:
+1. CreatureCacheEntry
+1. ModifierManagement
 
-This API provides reflection-based access to the `CreatureDetailCache` entries stored in the `CompositeLazyCache.sessionCache`. It uses strongly typed wrappers to provide safe and convenient access to cache data without requiring direct dependencies on internal types.
+Much of the modifications that SLS applies to a creature are stored in an internal cache the CreatureCache.
+This API provides reflection-based access to that cache. Specifically for reading, writing and modifying the cache entries.
 
-## Key Components
+This creature cache is created when a character is spawned and applied 1 second after the creature is created.
+If you need to modify the cache values after it has already been applied you can do so through this API.
 
 ### 1. CreatureCacheEntry
-
-A strongly typed wrapper around the internal `CreatureDetailCache` object that provides safe property access through reflection.
+This is the data structure that holds most of the modifications that a particular creature can have.
 
 **Key Properties:**
 - `Level`: Creature level
 - `CreatureDisabledInBiome`: Whether creature is disabled in current biome  
 - `Modifiers`: Dictionary of creature modifiers and their types
-- `DamageRecievedModifiers`: Damage resistance values by damage type
+- `DamageRecievedModifiers`: Damage recieved modifiers by damage type
 - `CreatureBaseValueModifiers`: Base attribute multipliers
 - `CreaturePerLevelValueModifiers`: Per-level attribute multipliers
 - `CreatureDamageBonus`: Damage bonus values by damage type

@@ -1,4 +1,5 @@
-﻿using StarLevelSystem.common;
+﻿using StarLevelSystem.API;
+using StarLevelSystem.common;
 using StarLevelSystem.modules;
 using System;
 using System.Collections;
@@ -12,9 +13,9 @@ namespace StarLevelSystem.Data
     public static class LevelSystemData
     {
 
-        public static DataObjects.CreatureLevelSettings SLE_Level_Settings = DefaultConfiguration;
+        public static CreatureLevelSettings SLE_Level_Settings = DefaultConfiguration;
 
-        public static DataObjects.CreatureLevelSettings DefaultConfiguration = new DataObjects.CreatureLevelSettings()
+        public static CreatureLevelSettings DefaultConfiguration = new CreatureLevelSettings()
         {
             DefaultCreatureLevelUpChance = new SortedDictionary<int, float>() {
                 { 1, 20f },
@@ -48,67 +49,67 @@ namespace StarLevelSystem.Data
                 { 29, 0.0019f },
                 { 30, 0.0019f },
             },
-            BiomeConfiguration = new Dictionary<Heightmap.Biome, DataObjects.BiomeSpecificSetting>()
+            BiomeConfiguration = new Dictionary<Heightmap.Biome, BiomeSpecificSetting>()
             {
-                { Heightmap.Biome.All, new DataObjects.BiomeSpecificSetting()
+                { Heightmap.Biome.All, new BiomeSpecificSetting()
                     {
                         SpawnRateModifier = 1.5f,
                         DistanceScaleModifier = 1.5f,
-                        DamageRecievedModifiers = new Dictionary<DataObjects.DamageType, float>() {
-                            {DataObjects.DamageType.Poison, 1.5f } 
+                        DamageRecievedModifiers = new Dictionary<DamageType, float>() {
+                            {DamageType.Poison, 1.5f }
                         },
-                        CreatureBaseValueModifiers = new Dictionary<DataObjects.CreatureBaseAttribute, float>() {
-                            { DataObjects.CreatureBaseAttribute.BaseHealth, 1f },
-                            { DataObjects.CreatureBaseAttribute.BaseDamage, 1f },
-                            { DataObjects.CreatureBaseAttribute.Speed, 1f },
-                            { DataObjects.CreatureBaseAttribute.Size, 1f }
+                        CreatureBaseValueModifiers = new Dictionary<CreatureBaseAttribute, float>() {
+                            { CreatureBaseAttribute.BaseHealth, 1f },
+                            { CreatureBaseAttribute.BaseDamage, 1f },
+                            { CreatureBaseAttribute.Speed, 1f },
+                            { CreatureBaseAttribute.Size, 1f }
                         },
-                        CreaturePerLevelValueModifiers = new Dictionary<DataObjects.CreaturePerLevelAttribute, float>() {
-                            { DataObjects.CreaturePerLevelAttribute.HealthPerLevel, 0.4f },
-                            { DataObjects.CreaturePerLevelAttribute.DamagePerLevel, 0.1f },
-                            { DataObjects.CreaturePerLevelAttribute.SpeedPerLevel, 0f },
-                            { DataObjects.CreaturePerLevelAttribute.SizePerLevel, 0.10f }
+                        CreaturePerLevelValueModifiers = new Dictionary<CreaturePerLevelAttribute, float>() {
+                            { CreaturePerLevelAttribute.HealthPerLevel, 0.4f },
+                            { CreaturePerLevelAttribute.DamagePerLevel, 0.1f },
+                            { CreaturePerLevelAttribute.SpeedPerLevel, 0f },
+                            { CreaturePerLevelAttribute.SizePerLevel, 0.10f }
                         },
                         
                     }
                 },
-                { Heightmap.Biome.Meadows, new DataObjects.BiomeSpecificSetting()
+                { Heightmap.Biome.Meadows, new BiomeSpecificSetting()
                     {
                         BiomeMaxLevelOverride = 4,
                     }
                 },
-                { Heightmap.Biome.BlackForest, new DataObjects.BiomeSpecificSetting()
+                { Heightmap.Biome.BlackForest, new BiomeSpecificSetting()
                     {
                         BiomeMaxLevelOverride = 6,
                     }
                 },
-                { Heightmap.Biome.Swamp, new DataObjects.BiomeSpecificSetting()
+                { Heightmap.Biome.Swamp, new BiomeSpecificSetting()
                     {
                         BiomeMaxLevelOverride = 10,
                     }
                 },
-                { Heightmap.Biome.Mountain, new DataObjects.BiomeSpecificSetting()
+                { Heightmap.Biome.Mountain, new BiomeSpecificSetting()
                     {
                         BiomeMaxLevelOverride = 14,
                     }
                 },
-                { Heightmap.Biome.Plains, new DataObjects.BiomeSpecificSetting()
+                { Heightmap.Biome.Plains, new BiomeSpecificSetting()
                     {
                         BiomeMaxLevelOverride = 18,
                     }
                 },
-                { Heightmap.Biome.Mistlands, new DataObjects.BiomeSpecificSetting()
+                { Heightmap.Biome.Mistlands, new BiomeSpecificSetting()
                     {
                         BiomeMaxLevelOverride = 22,
                     }
                 },
-                { Heightmap.Biome.AshLands, new DataObjects.BiomeSpecificSetting()
+                { Heightmap.Biome.AshLands, new BiomeSpecificSetting()
                     {
                         DistanceScaleModifier = 0.5f,
                         BiomeMaxLevelOverride = 26,
                     }
                 },
-                { Heightmap.Biome.DeepNorth, new DataObjects.BiomeSpecificSetting()
+                { Heightmap.Biome.DeepNorth, new BiomeSpecificSetting()
                     {
                         DistanceScaleModifier = 0.5f,
                         BiomeMaxLevelOverride = 26,
@@ -116,104 +117,104 @@ namespace StarLevelSystem.Data
                 }
             },
 
-            CreatureConfiguration = new Dictionary<string, DataObjects.CreatureSpecificSetting>() {
-                { "Lox", new DataObjects.CreatureSpecificSetting()
+            CreatureConfiguration = new Dictionary<string, CreatureSpecificSetting>() {
+                { "Lox", new CreatureSpecificSetting()
                     {
-                        CreaturePerLevelValueModifiers = new Dictionary<DataObjects.CreaturePerLevelAttribute, float>() {
-                            { DataObjects.CreaturePerLevelAttribute.SpeedPerLevel, 0.9f },
+                        CreaturePerLevelValueModifiers = new Dictionary<CreaturePerLevelAttribute, float>() {
+                            { CreaturePerLevelAttribute.SpeedPerLevel, 0.9f },
                         }
                     }
                 },
-                { "Troll", new DataObjects.CreatureSpecificSetting()
-                    {
-                        SpawnRateModifier = 1f,
-                        CreaturePerLevelValueModifiers = new Dictionary<DataObjects.CreaturePerLevelAttribute, float>() {
-                            { DataObjects.CreaturePerLevelAttribute.SizePerLevel, 0.05f },
-                        }
-                    }
-                },
-                { "Bjorn", new DataObjects.CreatureSpecificSetting()
+                { "Troll", new CreatureSpecificSetting()
                     {
                         SpawnRateModifier = 1f,
-                        CreaturePerLevelValueModifiers = new Dictionary<DataObjects.CreaturePerLevelAttribute, float>() {
-                            { DataObjects.CreaturePerLevelAttribute.SizePerLevel, 0.05f },
+                        CreaturePerLevelValueModifiers = new Dictionary<CreaturePerLevelAttribute, float>() {
+                            { CreaturePerLevelAttribute.SizePerLevel, 0.05f },
                         }
                     }
                 },
-                { "Eikthyr", new DataObjects.CreatureSpecificSetting()
+                { "Bjorn", new CreatureSpecificSetting()
+                    {
+                        SpawnRateModifier = 1f,
+                        CreaturePerLevelValueModifiers = new Dictionary<CreaturePerLevelAttribute, float>() {
+                            { CreaturePerLevelAttribute.SizePerLevel, 0.05f },
+                        }
+                    }
+                },
+                { "Eikthyr", new CreatureSpecificSetting()
                     {
                         CreatureMaxLevelOverride = 4,
                         SpawnRateModifier = 1f,
-                        CreaturePerLevelValueModifiers = new Dictionary<DataObjects.CreaturePerLevelAttribute, float>() {
-                            { DataObjects.CreaturePerLevelAttribute.HealthPerLevel, 0.3f },
-                            { DataObjects.CreaturePerLevelAttribute.DamagePerLevel, 0.05f },
-                            { DataObjects.CreaturePerLevelAttribute.SizePerLevel, 0.07f }
+                        CreaturePerLevelValueModifiers = new Dictionary<CreaturePerLevelAttribute, float>() {
+                            { CreaturePerLevelAttribute.HealthPerLevel, 0.3f },
+                            { CreaturePerLevelAttribute.DamagePerLevel, 0.05f },
+                            { CreaturePerLevelAttribute.SizePerLevel, 0.07f }
                         },
                     }
                 },
-                { "gd_king", new DataObjects.CreatureSpecificSetting()
+                { "gd_king", new CreatureSpecificSetting()
                     {
                         CreatureMaxLevelOverride = 6,
                         SpawnRateModifier = 1f,
-                        CreaturePerLevelValueModifiers = new Dictionary<DataObjects.CreaturePerLevelAttribute, float>() {
-                            { DataObjects.CreaturePerLevelAttribute.HealthPerLevel, 0.3f },
-                            { DataObjects.CreaturePerLevelAttribute.DamagePerLevel, 0.05f },
-                            { DataObjects.CreaturePerLevelAttribute.SizePerLevel, 0.07f }
+                        CreaturePerLevelValueModifiers = new Dictionary<CreaturePerLevelAttribute, float>() {
+                            { CreaturePerLevelAttribute.HealthPerLevel, 0.3f },
+                            { CreaturePerLevelAttribute.DamagePerLevel, 0.05f },
+                            { CreaturePerLevelAttribute.SizePerLevel, 0.07f }
                         },
                     }
                 },
-                { "Bonemass", new DataObjects.CreatureSpecificSetting()
+                { "Bonemass", new CreatureSpecificSetting()
                     {
                     CreatureMaxLevelOverride = 8,
                         SpawnRateModifier = 1f,
-                        CreaturePerLevelValueModifiers = new Dictionary<DataObjects.CreaturePerLevelAttribute, float>() {
-                            { DataObjects.CreaturePerLevelAttribute.HealthPerLevel, 0.3f },
-                            { DataObjects.CreaturePerLevelAttribute.DamagePerLevel, 0.05f },
-                            { DataObjects.CreaturePerLevelAttribute.SizePerLevel, 0.07f }
+                        CreaturePerLevelValueModifiers = new Dictionary<CreaturePerLevelAttribute, float>() {
+                            { CreaturePerLevelAttribute.HealthPerLevel, 0.3f },
+                            { CreaturePerLevelAttribute.DamagePerLevel, 0.05f },
+                            { CreaturePerLevelAttribute.SizePerLevel, 0.07f }
                         },
                     }
                 },
-                { "Dragon", new DataObjects.CreatureSpecificSetting()
+                { "Dragon", new CreatureSpecificSetting()
                     {
                         CreatureMaxLevelOverride = 10,
                         SpawnRateModifier = 1f,
-                        CreaturePerLevelValueModifiers = new Dictionary<DataObjects.CreaturePerLevelAttribute, float>() {
-                            { DataObjects.CreaturePerLevelAttribute.HealthPerLevel, 0.3f },
-                            { DataObjects.CreaturePerLevelAttribute.DamagePerLevel, 0.05f },
-                            { DataObjects.CreaturePerLevelAttribute.SizePerLevel, 0.07f }
+                        CreaturePerLevelValueModifiers = new Dictionary<CreaturePerLevelAttribute, float>() {
+                            { CreaturePerLevelAttribute.HealthPerLevel, 0.3f },
+                            { CreaturePerLevelAttribute.DamagePerLevel, 0.05f },
+                            { CreaturePerLevelAttribute.SizePerLevel, 0.07f }
                         },
                     }
                 },
-                { "GoblinKing", new DataObjects.CreatureSpecificSetting()
+                { "GoblinKing", new CreatureSpecificSetting()
                     {
                         CreatureMaxLevelOverride = 12,
                         SpawnRateModifier = 1f,
-                        CreaturePerLevelValueModifiers = new Dictionary<DataObjects.CreaturePerLevelAttribute, float>() {
-                            { DataObjects.CreaturePerLevelAttribute.HealthPerLevel, 0.3f },
-                            { DataObjects.CreaturePerLevelAttribute.DamagePerLevel, 0.05f },
-                            { DataObjects.CreaturePerLevelAttribute.SizePerLevel, 0.07f }
+                        CreaturePerLevelValueModifiers = new Dictionary<CreaturePerLevelAttribute, float>() {
+                            { CreaturePerLevelAttribute.HealthPerLevel, 0.3f },
+                            { CreaturePerLevelAttribute.DamagePerLevel, 0.05f },
+                            { CreaturePerLevelAttribute.SizePerLevel, 0.07f }
                         },
                     }
                 },
-                { "SeekerQueen", new DataObjects.CreatureSpecificSetting()
+                { "SeekerQueen", new CreatureSpecificSetting()
                     {
                         CreatureMaxLevelOverride = 14,
                         SpawnRateModifier = 1f,
-                        CreaturePerLevelValueModifiers = new Dictionary<DataObjects.CreaturePerLevelAttribute, float>() {
-                            { DataObjects.CreaturePerLevelAttribute.HealthPerLevel, 0.3f },
-                            { DataObjects.CreaturePerLevelAttribute.DamagePerLevel, 0.05f },
-                            { DataObjects.CreaturePerLevelAttribute.SizePerLevel, 0.07f }
+                        CreaturePerLevelValueModifiers = new Dictionary<CreaturePerLevelAttribute, float>() {
+                            { CreaturePerLevelAttribute.HealthPerLevel, 0.3f },
+                            { CreaturePerLevelAttribute.DamagePerLevel, 0.05f },
+                            { CreaturePerLevelAttribute.SizePerLevel, 0.07f }
                         },
                     }
                 },
-                { "Fader", new DataObjects.CreatureSpecificSetting()
+                { "Fader", new CreatureSpecificSetting()
                     {
                         CreatureMaxLevelOverride = 16,
                         SpawnRateModifier = 1f,
-                        CreaturePerLevelValueModifiers = new Dictionary<DataObjects.CreaturePerLevelAttribute, float>() {
-                            { DataObjects.CreaturePerLevelAttribute.HealthPerLevel, 0.3f },
-                            { DataObjects.CreaturePerLevelAttribute.DamagePerLevel, 0.05f },
-                            { DataObjects.CreaturePerLevelAttribute.SizePerLevel, 0.05f }
+                        CreaturePerLevelValueModifiers = new Dictionary<CreaturePerLevelAttribute, float>() {
+                            { CreaturePerLevelAttribute.HealthPerLevel, 0.3f },
+                            { CreaturePerLevelAttribute.DamagePerLevel, 0.05f },
+                            { CreaturePerLevelAttribute.SizePerLevel, 0.05f }
                         },
                     }
                 }
@@ -296,12 +297,12 @@ namespace StarLevelSystem.Data
             catch (Exception e) { Jotunn.Logger.LogWarning($"There was an error updating the Creature Level values, defaults will be used. Exception: {e}"); }
         }
         public static string YamlDefaultConfig() {
-            var yaml = DataObjects.yamlserializer.Serialize(DefaultConfiguration);
+            var yaml = yamlserializer.Serialize(DefaultConfiguration);
             return yaml;
         }
         public static bool UpdateYamlConfig(string yaml) {
             try {
-                SLE_Level_Settings = DataObjects.yamldeserializer.Deserialize<DataObjects.CreatureLevelSettings>(yaml);
+                SLE_Level_Settings = yamldeserializer.Deserialize<CreatureLevelSettings>(yaml);
                 Logger.LogDebug("Loaded new Star Level Creature settings, updating loaded creatures...");
                 foreach (var chara in Resources.FindObjectsOfTypeAll<Character>()) {
                     if (chara.m_level <= 1) { continue; }
@@ -330,7 +331,6 @@ namespace StarLevelSystem.Data
                     yield return sleep;
                     i = 0;
                 }
-                if (character.m_level <= 1) { continue; }
                 CreatureDetailCache ccd = CompositeLazyCache.GetAndSetDetailCache(character, true);
                 // Modify the creatures stats by custom character/biome modifications
                 ModificationExtensionSystem.ApplySpeedModifications(character, ccd);

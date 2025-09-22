@@ -1,12 +1,12 @@
 ﻿using HarmonyLib;
 using JetBrains.Annotations;
+using StarLevelSystem.API;
 using StarLevelSystem.Data;
 using StarLevelSystem.modules;
 using System.Collections.Generic;
 using UnityEngine;
 using static StarLevelSystem.common.DataObjects;
 using static StarLevelSystem.Data.CreatureModifiersData;
-using static StarLevelSystem.Modifiers.Summoner;
 
 namespace StarLevelSystem.Modifiers
 {
